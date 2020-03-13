@@ -7,14 +7,15 @@ class Blockchain:
     """
 
     def __init__(self):
-        self.chain = [] # list of block items
+        self.chain = [Block.genesis()] # list of block items
 
     #override default behavior of print by implementing repr method, this becomes the official string representation of the blockchain class
     def __repr__(self):
         return f"Blockchain: {self.chain}"
         
     def add_block(self, data):
-        self.chain.append(Block(data)) #make instance of block and append to chain
+        last_block = self.chain[-1]
+        self.chain.append(Block.mine_block(last_block, data)) #make instance of block and append to chain
 
 def main():
     #make instance of Blockchain

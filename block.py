@@ -1,22 +1,6 @@
 
 import time 
 
-def mine_block(last_block, data):
-    """
-    Mine a block based on the given last_block and data
-    """
-    timestamp = time.time_ns() #returns unique num based on counting num of nanoseconds since jan 1 1970
-    last_hash = last_block.hash #found by looking at hash of last block
-    hash = f'{timestamp}-{last_hash}' #temp implementation of hash
-    
-    return Block(timestamp, last_hash, hash, data)
-
-def genesis():
-    """
-    Generate the genesis block, hard coded w/ data as empty list
-    """
-    return Block(1, 'genesis_last_hash', "genesis_hash", [])
-
 class Block: 
     """
     Block: a unit of storage
@@ -37,14 +21,33 @@ class Block:
             f'last_hash: {self.last_hash},'
             f'hash: {self.hash},'
             f'data: {self.data})')
+    
+    @staticmethod 
+    def mine_block(last_block, data):
+        """
+        Mine a block based on the given last_block and data
+        """
+        timestamp = time.time_ns() #returns unique num based on counting num of nanoseconds since jan 1 1970
+        last_hash = last_block.hash #found by looking at hash of last block
+        hash = f'{timestamp}-{last_hash}' #temp implementation of hash
+        
+        return Block(timestamp, last_hash, hash, data)
+    
+    @staticmethod 
+    def genesis():
+        """
+        Generate the genesis block, hard coded w/ data as empty list
+        """
+        return Block(1, 'genesis_last_hash', "genesis_hash", [])
+
 
 def main():
     # block = Block('foo')
     # print(block)
     # print(f'block.py__name__: {__name__}')
 
-    genesis_block = genesis()
-    block = mine_block(genesis_block, 'foo')
+    genesis_block = Block.genesis()
+    block = Block.mine_block(genesis_block, 'foo')
     print(block)
 
 
